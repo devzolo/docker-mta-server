@@ -29,8 +29,24 @@ Refer to the list of supported tags above. If `:tag` is omitted, the `latest` ta
 
 Start a new Docker container for the MTA Server with this command:
 
-    shell> docker run --name=server1 -d devzolo/mta-server:tag
-&nbsp;
+
+```
+# [COMMAND] Options:
+
+* -v                   Shows the program version
+* -s                   Run server in silent mode
+* -d                   Run server daemonized
+* -x                   Disable simplified crash reports (To allow core dumps)
+* -D [PATH]            Use as base directory
+* --config [FILE]      Alternate mtaserver.conf file
+* --ip [ADDR]          Set IP address
+* --maxplayers [max]   Set maxplayers
+* --novoice            Disable voice communication
+```
+```
+    shell> docker run --name=server1 -d devzolo/mta-server:tag [COMMAND...]
+```
+
 The `--name` option, for supplying a custom name for your server container (`server1` in the example), is optional; if no container name is supplied, a random one is generated. If the Docker image of the specified name and tag has not been downloaded by an earlier `docker pull` or `docker run` command, the image is now downloaded. After download completes, initialization for the container begins, and the container appears in the list of running containers when you run the `docker ps` command; for example:
 
     shell> docker ps
@@ -43,3 +59,4 @@ The `-d` option used in the `docker run` command above makes the container run i
 
     shell> docker logs server1
 &nbsp;
+

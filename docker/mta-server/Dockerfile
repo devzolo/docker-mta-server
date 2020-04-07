@@ -40,7 +40,4 @@ RUN chmod a+x /app/mta-server64
 
 EXPOSE 22003/udp 22005/tcp 22126/udp
 
-ENTRYPOINT ["./app/mta-server64"]
-
-CMD ["-v"]
-
+ENTRYPOINT ["./app/mta-server64", "-n", "-u", "-t"]
