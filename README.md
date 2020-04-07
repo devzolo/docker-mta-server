@@ -35,7 +35,6 @@ Start a new Docker container for the MTA Server with this command:
 
 * -v                   Shows the program version
 * -s                   Run server in silent mode
-* -d                   Run server daemonized
 * -x                   Disable simplified crash reports (To allow core dumps)
 * -D [PATH]            Use as base directory
 * --config [FILE]      Alternate mtaserver.conf file
@@ -48,15 +47,15 @@ Start a new Docker container for the MTA Server with this command:
 ```
 
 The `--name` option, for supplying a custom name for your server container (`server1` in the example), is optional; if no container name is supplied, a random one is generated. If the Docker image of the specified name and tag has not been downloaded by an earlier `docker pull` or `docker run` command, the image is now downloaded. After download completes, initialization for the container begins, and the container appears in the list of running containers when you run the `docker ps` command; for example:
-
+```
     shell> docker ps
     CONTAINER ID   IMAGE                COMMAND                  CREATED             STATUS                              PORTS                           NAMES
     a24888f0d6f4   devzolo/mta-server   "./app/mta-server64 .."  14 seconds ago      Up 13 seconds (health: starting)    22003/udp, 22005/tcp 22126/udp  server1
-&nbsp;             
+```            
 The container initialization might take some time. When the server is ready for use, the `STATUS` of the container in the output of the `docker ps` command changes from `(health: starting)` to `(healthy)`.
 
 The `-d` option used in the `docker run` command above makes the container run in the background. Use this command to monitor the output from the container:
-
+```
     shell> docker logs server1
-&nbsp;
+```
 
