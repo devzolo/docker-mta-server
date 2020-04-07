@@ -59,3 +59,10 @@ The `-d` option used in the `docker run` command above makes the container run i
     shell> docker logs server1
 ```
 
+---
+## Examples
+
+### Starting Default MTA Server Instance
+```
+    shell> docker run --name=default-mta-server -p 22003:22003/udp -p 22005:22005/tcp -p 22126:22126/udp -d devzolo/mta-server:latest
+```
