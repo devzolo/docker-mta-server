@@ -13,6 +13,7 @@ RUN apt-get upgrade -y \
  && apt-get clean
 
 ADD mtasa-install.sh /usr/local/bin/mtasa-install.sh
+RUN chmod a+x /usr/local/bin/mtasa-install.sh
 RUN mtasa-install.sh
 RUN rm /usr/local/bin/mtasa-install.sh
 
