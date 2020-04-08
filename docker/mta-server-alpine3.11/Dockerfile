@@ -30,19 +30,19 @@ RUN mkdir app
 RUN mv multitheftauto_linux_x64/* app
 RUN rm -rf multitheftauto_linux_x64
 
-RUN mkdir -p ./app/mods/deathmatch
+RUN mkdir -p /app/mods/deathmatch
 RUN mv baseconfig/* app/mods/deathmatch
 RUN rm -rf baseconfig
 
-RUN mkdir -p ./app/mods/deathmatch/resources
-RUN unzip mtasa-resources-latest.zip -d ./app/mods/deathmatch/resources/
+RUN mkdir -p /app/mods/deathmatch/resources
+RUN unzip mtasa-resources-latest.zip -d /app/mods/deathmatch/resources/
 
 RUN rm -f multitheftauto_linux_x64.tar.gz
 RUN rm -f baseconfig.tar.gz
 RUN rm -f mtasa-resources-latest.zip
 
-RUN chmod a+x /app/mta-server64
+RUN chmod -R 777 /app/mta-server64
 
 EXPOSE 22003/udp 22005/tcp 22126/udp
 
-ENTRYPOINT ["./app/mta-server64", "-n", "-u", "-t"]
+ENTRYPOINT ["/app/mta-server64", "-n", "-u", "-t"]
