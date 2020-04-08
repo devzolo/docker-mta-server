@@ -1,63 +1,40 @@
-FROM alpine:3.11
+FROM alpine:latest
 
 LABEL maintainer="devzolo <coder.devzolo@gmail.com>"
 
-ARG server_dir=/app
-ARG exec_user=mta
-ARG entrypoint_dir=/usr/local/bin/
-
 EXPOSE 22003/udp 22005/tcp 22126/udp
 
-# Install required packages and create group and user
-USER root
+ENTRYPOINT ["./app/mta-server64", "-n", "-u", "-t"]
 
-RUN apk --update add libstdc++ \
-zip \
-bash \
-tar \
-unzip \
-screen \
-wget \
-curl \
-mysql-client \
-	&& addgroup -g 1000 ${exec_user} \
-	&& adduser -H -D -G ${exec_user} -u 1000 ${exec_user} \
-	&& mkdir -p ${server_dir} \
-	&& chown ${exec_user}:${exec_user} ${server_dir}
+RUN apk update && \
+    apk upgrade && \
+    apk --update add \
+        # gcc \
+        # g++ \
+        # build-base \
+        # cmake \
+        # bash \
+        # libstdc++ \
+        zip \
+        bash \
+        tar \
+        unzip \
+        readline \
+        ncurses5 \
+        screen \
+        curl \
+        mysql-client \
+  && rm -rf /var/cache/apk/* \
+	&& addgroup -g 1000 mta \
+	&& adduser -H -D -G mta -u 1000 mta \
+	&& mkdir -p /app \
+	&& chown mta:mta /app
 
-RUN rm -f multitheftauto_linux_x64.tar.gz
-RUN rm -f baseconfig.tar.gz
-RUN rm -f mtasa-resources-latest.zip
+ADD mtasa-install.sh /usr/local/bin/mtasa-install.sh
+RUN mtasa-install.sh
+RUN rm /usr/local/bin/mtasa-install.sh
 
-RUN curl -fsSLO --compressed http://linux.mtasa.com/dl/multitheftauto_linux_x64.tar.gz
-RUN curl -fsSLO --compressed http://linux.mtasa.com/dl/baseconfig.tar.gz
-RUN curl -fsSLO --compressed http://mirror.mtasa.com/mtasa/resources/mtasa-resources-latest.zip
+RUN rm -rf ./app
+RUN mv ./multitheftauto_linux_x64 ./app
 
-RUN tar -xf multitheftauto_linux_x64.tar.gz
-RUN tar -xf baseconfig.tar.gz
-
-RUN mkdir -p ${server_dir}
-RUN mv multitheftauto_linux_x64/* app
-RUN rm -rf multitheftauto_linux_x64
-
-RUN mkdir -p ${server_dir}/mods/deathmatch
-RUN mv baseconfig/* app/mods/deathmatch
-RUN rm -rf baseconfig
-
-RUN mkdir -p ${server_dir}/mods/deathmatch/resources
-RUN unzip mtasa-resources-latest.zip -d ${server_dir}/mods/deathmatch/resources/
-
-RUN rm -f multitheftauto_linux_x64.tar.gz
-RUN rm -f baseconfig.tar.gz
-RUN rm -f mtasa-resources-latest.zip
-
-# add entrypoint script
-ADD docker-entrypoint.sh ${entrypoint_dir}docker-entrypoint.sh
-
-# exec program
-USER ${exec_user}
-WORKDIR ${server_dir}
-
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-
-CMD [  "./mta-server64", "-n", "-u", "-t" ]
+RUN chmod a+x ./app/mta-server64
