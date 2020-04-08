@@ -12,10 +12,10 @@ RUN apt-get upgrade -y \
  && apt-get install zip bash tar unzip lib32z1 lib32ncurses5 screen wget curl mysql-client -y \
  && apt-get clean
 
-ADD mtasa-install.sh /usr/local/bin/mtasa-install.sh
-RUN chmod a+x /usr/local/bin/mtasa-install.sh
-RUN mtasa-install.sh
-RUN rm /usr/local/bin/mtasa-install.sh
+ADD mtasa-install.sh ./mtasa-install.sh
+RUN chmod a+x ./mtasa-install.sh
+RUN ./mtasa-install.sh
+RUN rm ./mtasa-install.sh
 
 RUN rm -rf ./app
 RUN mv ./multitheftauto_linux_x64 ./app

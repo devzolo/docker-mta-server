@@ -30,9 +30,10 @@ RUN apk update && \
 	&& mkdir -p /app \
 	&& chown mta:mta /app
 
-ADD mtasa-install.sh /usr/local/bin/mtasa-install.sh
-RUN mtasa-install.sh
-RUN rm /usr/local/bin/mtasa-install.sh
+ADD mtasa-install.sh ./mtasa-install.sh
+RUN chmod a+x ./mtasa-install.sh
+RUN ./mtasa-install.sh
+RUN rm ./mtasa-install.sh
 
 RUN rm -rf ./app
 RUN mv ./multitheftauto_linux_x64 ./app
