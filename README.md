@@ -1,4 +1,6 @@
-![logo](https://wiki.multitheftauto.com/images/thumb/5/58/Mtalogo.png/150px-Mtalogo.png)
+<p align="center">
+    <img src="https://wiki.multitheftauto.com/images/thumb/5/58/Mtalogo.png/150px-Mtalogo.png">
+</p>
 
 What is Multi Theft Auto?
 --------------
@@ -51,7 +53,7 @@ The `--name` option, for supplying a custom name for your server container (`ser
     shell> docker ps
     CONTAINER ID   IMAGE                COMMAND                  CREATED             STATUS                              PORTS                           NAMES
     a24888f0d6f4   devzolo/mta-server   "./app/mta-server64 .."  14 seconds ago      Up 13 seconds (health: starting)    22003/udp, 22005/tcp 22126/udp  server1
-```            
+```
 The container initialization might take some time. When the server is ready for use, the `STATUS` of the container in the output of the `docker ps` command changes from `(health: starting)` to `(healthy)`.
 
 The `-d` option used in the `docker run` command above makes the container run in the background. Use this command to monitor the output from the container:
